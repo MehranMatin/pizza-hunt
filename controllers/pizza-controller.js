@@ -1,8 +1,9 @@
 const { Pizza } = require('../models');
 
+// controller methods uses (req, res) params because routes will be sending resquests
 const pizzaController = {
   // get all pizzas; GET /api/pizzas
-  getAllPizzas(req, res) {
+  getAllPizza(req, res) {
     Pizza.find({})
       .then(dbPizzaData => res.json(dbPizzaData))
       .catch(err => {
