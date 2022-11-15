@@ -1,4 +1,8 @@
+// Alternate Routes Setup
+// *Pros: easier-to-read code
+// *Cons: tracking more file import/export
 const router = require('express').Router();
+
 // functionality import statement for routes
 const {
   getAllPizza,

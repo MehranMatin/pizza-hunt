@@ -50,7 +50,7 @@ const pizzaController = {
   },
 
   // delete pizza; DELETE /api/pizzas/:id
-  deletePizza({ params }, routes) {
+  deletePizza({ params }, res) {
     Pizza.findOneAndDelete({ _id: params.id })
       .then(dbPizzaData => {
         if (!dbPizzaData) {
