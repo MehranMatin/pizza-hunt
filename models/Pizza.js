@@ -1,20 +1,23 @@
+const dateFormat = require('../utils/dateFormat');
 const { Schema, model } = require('mongoose');
 
 const PizzaSchema = new Schema(
   {
     pizzaName: {
-        type: String
+      type: String
     },
     createdBy: {
-        type: String
+      type: String
     },
     createdAt: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now,
+      // every time we retrieve a pizza, the value in the createdAt field will be formatted by the dateFormat() function and used instead of the default timestamp value
+      get: (createdAtVal) => dateFormat(createdAtVal)
     },
     size: {
-        type: String,
-        default: 'Large'
+      type: String,
+      default: 'Large'
     },
     toppings: [],
     comments: [
@@ -27,7 +30,9 @@ const PizzaSchema = new Schema(
   {
     // tell the schema that it can use virtuals
     toJSON: {
-      virtuals: true
+      virtuals: true,
+      // tell the Mongoose model that it should use any getter function we've specified
+      getters: true
     },
     // this is a virtual that Mongoose returns, and we don’t need it
     id: false
@@ -35,7 +40,7 @@ const PizzaSchema = new Schema(
 );
 
 // get total count of comments and replies on retrieval
-PizzaSchema.virtual('commentCount').get(function() {
+PizzaSchema.virtual('commentCount').get(function () {
   return this.comments.length;
 });
 
