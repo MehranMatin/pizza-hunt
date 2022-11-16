@@ -1,3 +1,6 @@
+// import models
 const Pizza = require('./Pizza');
+const Comment = require('./Comment');
 
-module.exports = { Pizza };
+// package up models
+module.exports = { Pizza, Comment };

@@ -5,6 +5,15 @@ const pizzaController = {
   // get all pizzas; GET /api/pizzas
   getAllPizza(req, res) {
     Pizza.find({})
+      // pass in object with the key path + the value of the field you want populated
+      .populate({
+        path: 'comments',
+        select: '-__v'
+      })
+      // the - sign tells to omit the field
+      .select('-__v')
+      // sort in DESC order by _id to get newest item; A timestamp value is hidden somewhere inside the MongoDB ObjectId
+      .sort({ _id: -1 })
       .then(dbPizzaData => res.json(dbPizzaData))
       .catch(err => {
         console.log(err);
@@ -15,6 +24,11 @@ const pizzaController = {
   // get one pizza by id; GET /api/pizzas/?
   getPizzaById({ params }, res) {
     Pizza.findOne({ _id: params.id })
+      .populate({
+        path: 'comments',
+        select: '-__v'
+      })
+      .select('-__v')
       .then(dbPizzaData => {
         // If no pizza is found, send 404
         if (!dbPizzaData) {
